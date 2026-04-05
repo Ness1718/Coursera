@@ -1,1 +1,43 @@
+// STEP 0: Wrap everything in an IIFE
+(function (global) {
+
+  var dc = {};
+
+  // STEP 1: Modify loadMenuItems for Specials
+  dc.loadMenuItems = function (categoryShortName) {
+    // existing code already loads menu items by category
+  };
+
+  // STEP 2: Function to pick random category
+  function chooseRandomCategory(categories) {
+    var randomIndex = Math.floor(Math.random() * categories.length);
+    return categories[randomIndex].short_name;
+  }
+
+  // STEP 3: When loading home page, replace {{randomCategoryShortName}}
+  dc.loadHomePage = function () {
+    $ajaxUtils.sendGetRequest(
+      homeHtmlUrl,
+      function (responseText) {
+        document.querySelector("#main-content").innerHTML = responseText;
+
+        // Get categories from server
+        $ajaxUtils.sendGetRequest(
+          allCategoriesUrl,
+          function (categories) {
+            var randomCategoryShortName = chooseRandomCategory(categories);
+
+            // Replace placeholder in snippet
+            var specialsTile = document.querySelector("#specials-tile a");
+            specialsTile.setAttribute("onclick", "$dc.loadMenuItems('" + randomCategoryShortName + "');");
+          }
+        );
+      },
+      false
+    );
+  };
+
+  global.$dc = dc;
+
+})(window);
 

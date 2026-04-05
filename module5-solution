@@ -1,20 +1,20 @@
-// STEP 0: Wrap everything in an IIFE
+// Wrap everything in an IIFE
 (function (global) {
 
   var dc = {};
 
-  // STEP 1: Modify loadMenuItems for Specials
+  // Modify loadMenuItems for Specials
   dc.loadMenuItems = function (categoryShortName) {
-    // existing code already loads menu items by category
+    //existing code already loads menu items by category
   };
 
-  // STEP 2: Function to pick random category
+  //Function to pick random category
   function chooseRandomCategory(categories) {
     var randomIndex = Math.floor(Math.random() * categories.length);
     return categories[randomIndex].short_name;
   }
 
-  // STEP 3: When loading home page, replace {{randomCategoryShortName}}
+  //When loading home page, replace {{randomCategoryShortName}}
   dc.loadHomePage = function () {
     $ajaxUtils.sendGetRequest(
       homeHtmlUrl,
